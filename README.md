@@ -1,2 +1,2 @@
-[# DSA_Assignment-](https://leetcode.com/u/Arjit_Gupta_2716/)
+[# LeetCode_Profile](https://leetcode.com/u/Arjit_Gupta_2716/)
 
