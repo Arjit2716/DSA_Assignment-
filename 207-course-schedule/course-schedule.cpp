@@ -1,30 +1,50 @@
 class Solution {
 public:
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> adj(numCourses);
-        vector<int>indegree(numCourses,0);
-        //Build Graph
-        for(auto &p:prerequisites){
-            adj[p[1]].push_back(p[0]);
-            indegree[p[0]]++;
+
+    bool topologicalSortCheck(unordered_map<int, vector<int>>& adj,
+                              int n,
+                              vector<int>& indegree) {
+        
+        queue<int> q;
+        int count = 0;
+
+        // Push all nodes with indegree 0
+        for (int i = 0; i < n; i++) {
+            if (indegree[i] == 0)
+                q.push(i);
         }
-        queue<int>q;
-        //pushing coursses with no prerequisites
-        for(int i=0;i<numCourses;i++){
-            if(indegree[i]==0)
-            q.push(i);
-        }
-        int count=0;
-        while(!q.empty()){
-            int course=q.front();
+
+        while (!q.empty()) {
+            int u = q.front();
             q.pop();
             count++;
-            for(int next:adj[course]){
-                indegree[next]--;
-                if(indegree[next]==0)
-                q.push(next);
+
+            for (int v : adj[u]) {
+                indegree[v]--;
+
+                if (indegree[v] == 0) {
+                    q.push(v);
+                }
             }
         }
-        return count==numCourses;
+
+        return count == n;
+    }
+
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        
+        unordered_map<int, vector<int>> adj;
+        vector<int> indegree(numCourses, 0);
+
+        for (auto &vec : prerequisites) {
+            int a = vec[0];
+            int b = vec[1];
+
+            // b → a
+            adj[b].push_back(a);
+            indegree[a]++;
+        }
+
+        return topologicalSortCheck(adj, numCourses, indegree);
     }
 };
