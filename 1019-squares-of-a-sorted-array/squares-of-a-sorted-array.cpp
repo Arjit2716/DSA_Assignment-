@@ -8,7 +8,7 @@ public:
 
         while(left<=right){
 
-            if(nums[left]>nums[right]){
+            if(abs(nums[left])>abs(nums[right])){
                 ans[right-left]=nums[left]*nums[left];
                 left++;
             }
@@ -18,7 +18,7 @@ public:
             } 
         }
         
-sort(ans.begin(),ans.end());
+
         return ans;
     }
 };
